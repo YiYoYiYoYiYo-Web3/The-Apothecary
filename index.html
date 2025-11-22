@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杏林存续录 (Whiteout)</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>杏林存续录</h1>
+            <div id="resources">
+                <div class="resource-item">
+                    <span class="icon">💰</span>
+                    <span id="gold-display">0</span>
+                </div>
+                <div class="resource-item">
+                    <span class="icon">🌿</span>
+                    <span id="herb-count-display">0</span>
+                </div>
+                <div class="resource-item">
+                    <span class="icon">🏆</span>
+                    <span id="reputation-display">0</span>
+                </div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <!-- Dynamic Content will be loaded here -->
+        </main>
+
+        <!-- Notification Area moved outside main-content to prevent clearing -->
+        <div id="notification-area"></div>
+
+        <div id="inventory-drawer">
+            <div id="inventory-handle">
+                <span class="icon">🎒</span>
+                <span>行囊</span>
+                <span id="drawer-arrow">▲</span>
+            </div>
+            <div id="inventory-content">
+                <!-- Items will be populated here -->
+            </div>
+        </div>
+
+        <nav id="bottom-nav">
+            <button class="nav-btn" data-target="garden">
+                <span class="icon">🌱</span>
+                <span>药圃</span>
+            </button>
+            <button class="nav-btn" data-target="processing">
+                <span class="icon">⚗️</span>
+                <span>炮制</span>
+            </button>
+            <button class="nav-btn active" data-target="clinic">
+                <span class="icon">🏥</span>
+                <span>大医堂</span>
+            </button>
+            <button class="nav-btn" data-target="explore">
+                <span class="icon">🗺️</span>
+                <span>探索</span>
+            </button>
+            <button class="nav-btn" data-target="shop">
+                <span class="icon">🏪</span>
+                <span>商铺</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js?v=4"></script>
+</body>
+
+</html>

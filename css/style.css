@@ -1,0 +1,289 @@
+:root {
+    --primary-color: #d4a373;
+    /* Earthy Gold */
+    --secondary-color: #ccd5ae;
+    /* Pale Green */
+    --bg-color: #1a1a1a;
+    /* Dark Background */
+    --panel-bg: #2c2c2c;
+    /* Panel Background */
+    --text-color: #e9edc9;
+    /* Light Text */
+    --accent-color: #e76f51;
+    /* Burnt Orange */
+    --font-main: 'Noto Serif SC', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#app {
+    width: 100%;
+    max-width: 480px;
+    /* Mobile-first constraint */
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+header {
+    padding: 15px;
+    background-color: var(--panel-bg);
+    border-bottom: 1px solid #444;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+}
+
+#resources {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    position: relative;
+}
+
+#bottom-nav {
+    height: 70px;
+    background-color: var(--panel-bg);
+    border-top: 1px solid #444;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.nav-btn.active,
+.nav-btn:hover {
+    color: var(--primary-color);
+}
+
+.nav-btn .icon {
+    font-size: 1.2rem;
+}
+
+/* Utility Classes for Dynamic Content */
+.panel {
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #444;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.herb-card,
+.recipe-card,
+.patient-card {
+    background-color: #333;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border-left: 3px solid var(--primary-color);
+}
+
+#notification-area {
+    position: fixed;
+    /* Fixed to stay on top even if main content scrolls */
+    top: 80px;
+    /* Below header */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 400px;
+    pointer-events: none;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid #444;
+
+    /* Initial State (Hidden) */
+    opacity: 0;
+    transform: translateY(20px);
+    max-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 100px;
+    /* Arbitrary large enough height */
+    margin-bottom: 10px;
+    padding: 10px 20px;
+}
+
+.notification.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+/* Inventory Drawer */
+#inventory-drawer {
+    position: absolute;
+    bottom: 70px;
+    /* Height of bottom-nav */
+    left: 0;
+    width: 100%;
+    background-color: var(--panel-bg);
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    z-index: 90;
+    transform: translateY(100%);
+    /* Initially hidden (pushed down) */
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    max-height: 60%;
+    /* Max height when expanded */
+    display: flex;
+    flex-direction: column;
+}
+
+#inventory-drawer.open {
+    transform: translateY(0);
+}
+
+#inventory-handle {
+    position: absolute;
+    top: -30px;
+    /* Stick out above the drawer */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--panel-bg);
+    padding: 5px 20px;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid #444;
+    border-bottom: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#inventory-content {
+    padding: 15px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.inventory-item {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid #555;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.inventory-item .icon {
+    font-size: 1.5rem;
+}
+
+.inventory-item .count {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+#drawer-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+}
+
+#inventory-drawer.open #drawer-arrow {
+    transform: rotate(180deg);
+}
