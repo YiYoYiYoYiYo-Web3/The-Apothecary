@@ -40,12 +40,13 @@ class Game {
         this.buildingManager.update(deltaTime);
         this.patientManager.update(deltaTime);
 
-        // Selectively update only dynamic UI elements (progress bars, timers) without full re-render
+        // UI updates are handled by user interactions and resource change listeners
         if (this.uiManager && (this.uiManager.currentTab === 'clinic' || this.uiManager.currentTab === 'garden')) {
             if (Math.floor(timestamp / 1000) > Math.floor((timestamp - deltaTime * 1000) / 1000)) {
                 this.uiManager.updateDynamicElements();
             }
         }
+        // Real-time progress updates were removed to prevent flickering
 
         requestAnimationFrame(this.loop);
     }
