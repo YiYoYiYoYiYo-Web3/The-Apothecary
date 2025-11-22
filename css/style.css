@@ -1,16 +1,28 @@
 :root {
-    --primary-color: #d4a373;
-    /* Earthy Gold */
-    --secondary-color: #ccd5ae;
-    /* Pale Green */
-    --bg-color: #1a1a1a;
-    /* Dark Background */
-    --panel-bg: #2c2c2c;
-    /* Panel Background */
-    --text-color: #e9edc9;
-    /* Light Text */
-    --accent-color: #e76f51;
-    /* Burnt Orange */
+    /* Color Palette - Deep Mountain Theme */
+    --bg-color: #0f1210;
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+
+    --primary-gold: #c6a87c;
+    --primary-gold-dim: #8a7556;
+
+    --accent-green: #556b2f;
+    --accent-green-light: #8fbc8f;
+
+    --danger: #cd5c5c;
+    --success: #8fbc8f;
+
+    /* Glassmorphism */
+    --glass-bg: rgba(30, 36, 30, 0.75);
+    --glass-border: rgba(198, 168, 124, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+    /* Spacing & Layout */
+    --header-height: 70px;
+    --nav-height: 80px;
+    --border-radius: 16px;
+
     --font-main: 'Noto Serif SC', serif;
 }
 
@@ -19,144 +31,300 @@
     margin: 0;
     padding: 0;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     font-family: var(--font-main);
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--text-main);
     height: 100vh;
     display: flex;
     justify-content: center;
     overflow: hidden;
+    background-image: radial-gradient(circle at 50% 0%, #1f2620 0%, #0f1210 100%);
 }
 
+/* --- Main Container --- */
 #app {
     width: 100%;
-    max-width: 480px;
-    /* Mobile-first constraint */
+    max-width: 500px;
+    /* Slightly wider for modern feel */
     height: 100%;
-    background-color: var(--bg-color);
+    position: relative;
     display: flex;
     flex-direction: column;
-    position: relative;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background: transparent;
+    overflow: hidden;
 }
 
+/* --- Glass Utility --- */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+/* --- Header --- */
 header {
-    padding: 15px;
-    background-color: var(--panel-bg);
-    border-bottom: 1px solid #444;
+    height: var(--header-height);
+    padding: 0 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    z-index: 10;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    margin: 0 10px 10px 10px;
+    border-top: none;
 }
 
 h1 {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    letter-spacing: 2px;
+    font-size: 1.2rem;
+    color: var(--primary-gold);
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #resources {
     display: flex;
-    gap: 20px;
-    font-size: 0.9rem;
+    gap: 15px;
 }
 
 .resource-item {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.resource-item .icon {
+    font-size: 1rem;
+}
+
+/* --- Main Content --- */
 #main-content {
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
-    position: relative;
+    padding: 10px 20px 100px 20px;
+    /* Bottom padding for nav */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
+#main-content::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+/* --- Cards (Garden, Clinic, etc.) --- */
+.panel {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.5s ease-out;
+}
+
+h2 {
+    font-size: 1.1rem;
+    color: var(--primary-gold);
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(198, 168, 124, 0.3);
+    padding-bottom: 8px;
+}
+
+/* Specific Card Styles */
+.herb-card,
+.recipe-card,
+.patient-card {
+    background: linear-gradient(145deg, rgba(40, 40, 40, 0.6), rgba(30, 30, 30, 0.8));
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-gold-dim);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.herb-card:hover,
+.recipe-card:hover,
+.patient-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    border-left-color: var(--primary-gold);
+}
+
+/* Buttons */
+.btn {
+    background: linear-gradient(135deg, var(--primary-gold-dim), var(--primary-gold));
+    color: #1a1a1a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: var(--font-main);
+    box-shadow: 0 4px 15px rgba(198, 168, 124, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(198, 168, 124, 0.5);
+    filter: brightness(1.1);
+}
+
+.btn:disabled {
+    background: #444;
+    color: #888;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+}
+
+/* --- Bottom Navigation --- */
 #bottom-nav {
-    height: 70px;
-    background-color: var(--panel-bg);
-    border-top: 1px solid #444;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    height: var(--nav-height);
+    border-radius: 24px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position: relative;
     z-index: 100;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-btn {
     background: none;
     border: none;
-    color: #888;
+    color: var(--text-muted);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     cursor: pointer;
-    transition: color 0.3s;
-}
-
-.nav-btn.active,
-.nav-btn:hover {
-    color: var(--primary-color);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 10px;
+    border-radius: 12px;
 }
 
 .nav-btn .icon {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    transition: transform 0.3s;
 }
 
-/* Utility Classes for Dynamic Content */
-.panel {
-    background-color: var(--panel-bg);
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-    border: 1px solid #444;
+.nav-btn span:last-child {
+    font-size: 0.75rem;
+    font-weight: 500;
 }
 
-.btn {
-    background-color: var(--primary-color);
-    color: var(--bg-color);
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+.nav-btn.active {
+    color: var(--primary-gold);
+    background: rgba(198, 168, 124, 0.1);
+}
+
+.nav-btn.active .icon {
+    transform: translateY(-2px);
+}
+
+/* --- Inventory Drawer --- */
+#inventory-drawer {
+    position: absolute;
+    bottom: calc(20px + var(--nav-height) + 10px);
+    /* Above nav */
+    left: 20px;
+    right: 20px;
+    border-radius: var(--border-radius);
+    z-index: 90;
+    transform: translateY(120%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 50%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+}
+
+#inventory-drawer.open {
+    transform: translateY(0);
+}
+
+#inventory-handle {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 24px;
+    border-radius: 20px;
     cursor: pointer;
-    font-family: var(--font-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-gold);
     font-weight: bold;
-    transition: opacity 0.2s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(198, 168, 124, 0.2);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
 }
 
-.btn:hover {
-    opacity: 0.9;
+#inventory-content {
+    padding: 20px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 15px;
 }
 
-.btn:disabled {
-    background-color: #555;
-    cursor: not-allowed;
-    background-color: #555;
-    cursor: not-allowed;
-}
-
-.herb-card,
-.recipe-card,
-.patient-card {
-    background-color: #333;
+.inventory-item {
+    background: rgba(255, 255, 255, 0.05);
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border-left: 3px solid var(--primary-color);
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s;
 }
 
+.inventory-item:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.inventory-item .icon {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.inventory-item .count {
+    font-size: 0.8rem;
+    color: var(--primary-gold);
+    font-weight: bold;
+}
+
+/* --- Notifications --- */
 #notification-area {
     position: fixed;
-    /* Fixed to stay on top even if main content scrolls */
-    top: 80px;
-    /* Below header */
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
@@ -170,120 +338,47 @@ h1 {
 }
 
 .notification {
-    background-color: rgba(0, 0, 0, 0.9);
-    color: var(--primary-color);
-    padding: 10px 20px;
-    border-radius: 4px;
+    background: rgba(15, 18, 16, 0.95);
+    color: var(--primary-gold);
+    padding: 12px 24px;
+    border-radius: 50px;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    border: 1px solid #444;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--primary-gold-dim);
+    font-size: 0.9rem;
 
-    /* Initial State (Hidden) */
+    /* Animation */
     opacity: 0;
-    transform: translateY(20px);
-    max-height: 0;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: translateY(20px) scale(0.9);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .notification.show {
     opacity: 1;
-    transform: translateY(0);
-    max-height: 100px;
-    /* Arbitrary large enough height */
-    margin-bottom: 10px;
-    padding: 10px 20px;
+    transform: translateY(0) scale(1);
 }
 
-.notification.hide {
-    opacity: 0;
-    transform: translateY(-20px);
-    max-height: 0;
-    margin-bottom: 0;
-    padding: 0;
+/* --- Keyframes --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Inventory Drawer */
-#inventory-drawer {
-    position: absolute;
-    bottom: 70px;
-    /* Height of bottom-nav */
-    left: 0;
-    width: 100%;
-    background-color: var(--panel-bg);
-    border-top: 1px solid #444;
-    border-bottom: 1px solid #444;
-    z-index: 90;
-    transform: translateY(100%);
-    /* Initially hidden (pushed down) */
-    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    max-height: 60%;
-    /* Max height when expanded */
-    display: flex;
-    flex-direction: column;
-}
+/* --- Responsive Tweaks --- */
+@media (max-height: 700px) {
+    :root {
+        --header-height: 60px;
+        --nav-height: 70px;
+    }
 
-#inventory-drawer.open {
-    transform: translateY(0);
-}
-
-#inventory-handle {
-    position: absolute;
-    top: -30px;
-    /* Stick out above the drawer */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--panel-bg);
-    padding: 5px 20px;
-    border-radius: 10px 10px 0 0;
-    border: 1px solid #444;
-    border-bottom: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: var(--primary-color);
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-}
-
-#inventory-content {
-    padding: 15px;
-    overflow-y: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 10px;
-}
-
-.inventory-item {
-    background-color: #333;
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
-    border: 1px solid #555;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.inventory-item .icon {
-    font-size: 1.5rem;
-}
-
-.inventory-item .count {
-    font-size: 0.8rem;
-    color: #aaa;
-}
-
-#drawer-arrow {
-    font-size: 0.8rem;
-    transition: transform 0.3s;
-}
-
-#inventory-drawer.open #drawer-arrow {
-    transform: rotate(180deg);
+    #main-content {
+        padding-bottom: 90px;
+    }
 }

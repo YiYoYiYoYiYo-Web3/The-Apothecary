@@ -4,25 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>杏林存续录 (Whiteout)</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
-</head>
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>杏林存续录 (The-Apothecary)</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    </head>
 
 <body>
-    <div id="app">
-        <header>
+    <div id="app" class="glass-container">
+        <header class="glass-panel">
             <h1>杏林存续录</h1>
             <div id="resources">
-                <div class="resource-item">
+                <div class="resource-item" title="金钱">
                     <span class="icon">💰</span>
                     <span id="gold-display">0</span>
                 </div>
-                <div class="resource-item">
+                <div class="resource-item" title="草药">
                     <span class="icon">🌿</span>
                     <span id="herb-count-display">0</span>
                 </div>
-                <div class="resource-item">
+                <div class="resource-item" title="声望">
                     <span class="icon">🏆</span>
                     <span id="reputation-display">0</span>
                 </div>
@@ -33,11 +39,11 @@
             <!-- Dynamic Content will be loaded here -->
         </main>
 
-        <!-- Notification Area moved outside main-content to prevent clearing -->
+        <!-- Notification Area -->
         <div id="notification-area"></div>
 
-        <div id="inventory-drawer">
-            <div id="inventory-handle">
+        <div id="inventory-drawer" class="glass-panel">
+            <div id="inventory-handle" class="glass-panel">
                 <span class="icon">🎒</span>
                 <span>行囊</span>
                 <span id="drawer-arrow">▲</span>
@@ -47,7 +53,7 @@
             </div>
         </div>
 
-        <nav id="bottom-nav">
+        <nav id="bottom-nav" class="glass-panel">
             <button class="nav-btn" data-target="garden">
                 <span class="icon">🌱</span>
                 <span>药圃</span>
