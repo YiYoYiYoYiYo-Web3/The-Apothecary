@@ -36,10 +36,14 @@ export class InventoryUI {
         }
         
         if (this.isDrawerOpen) {
-            // 打开时显示Inventory并将Handle移动到Inventory顶部
+            // 打开时显示Inventory，等待DOM更新后再移动Handle
             this.inventoryDrawer.style.display = 'flex';
-            this.moveHandleWithDrawer();
             this.render();
+            
+            // 使用requestAnimationFrame确保DOM已经渲染完成，再获取实际高度
+            requestAnimationFrame(() => {
+                this.moveHandleWithDrawer();
+            });
         } else {
             // 关闭时等待动画完成后再隐藏Inventory，并将Handle移回初始位置
             setTimeout(() => {
@@ -52,11 +56,18 @@ export class InventoryUI {
     }
     
     moveHandleWithDrawer() {
-        if (this.inventoryHandle) {
-            // 将Handle移动到Inventory顶部，跟随Inventory上移
-            this.inventoryHandle.style.bottom = 'calc(20px + var(--nav-height) + 10px + 40px)';
+        if (this.inventoryHandle && this.inventoryDrawer) {
+            // 获取Inventory的实际高度
+            const inventoryHeight = this.inventoryDrawer.offsetHeight;
+            const handleHeight = this.inventoryHandle.offsetHeight;
+            
+            // 计算Handle应该移动到的位置：Inventory顶部上方Handle高度的位置
+            const handleBottomPosition = `calc(20px + var(--nav-height) + 10px + ${inventoryHeight}px + 10px)`;
+            
+            // 将Handle移动到Inventory上方
+            this.inventoryHandle.style.bottom = handleBottomPosition;
             this.inventoryHandle.style.left = '50%';
-            this.inventoryHandle.style.transform = 'translateX(-50%) translateY(-40px)';
+            this.inventoryHandle.style.transform = 'translateX(-50%)';
         }
     }
     

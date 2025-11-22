@@ -4,6 +4,8 @@ export class ExploreUI {
     constructor(uiManager) {
         this.uiManager = uiManager;
         this.game = uiManager.game;
+        this.lastExploreTime = 0;
+        this.exploreCooldown = 3000; // 3秒冷却时间
     }
 
     render() {
@@ -54,6 +56,16 @@ export class ExploreUI {
     }
 
     explore() {
+        const currentTime = Date.now();
+        const timeSinceLastExplore = currentTime - this.lastExploreTime;
+        
+        if (timeSinceLastExplore < this.exploreCooldown) {
+            const remainingTime = Math.ceil((this.exploreCooldown - timeSinceLastExplore) / 1000);
+            this.uiManager.showNotification(`探索冷却中，请等待${remainingTime}秒...`);
+            return;
+        }
+        
+        this.lastExploreTime = currentTime;
         const result = this.game.exploreManager.explore();
         this.uiManager.showNotification(result.message);
 
